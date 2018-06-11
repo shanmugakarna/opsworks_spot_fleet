@@ -1,18 +1,18 @@
-#Spot Fleet Register and De-Register from Opsworks
+# Spot Fleet Register and De-Register from Opsworks
 
-##Requirements
+## Requirements
 1. A `EC2 Spot Fleet Role` to launch the spot fleet on your behalf.
 2. An IAM Role to use as EC2 Instance Profile -- This role should have opsworks `register`, `deregister` and `assign` access
 3. Opsworks Stack and a Layer for the instances to register to.
 
-#Usage
+# Usage
 1. Clone the repo and run `pip install -r requirements.txt`.
 2. User the `generate_config.py` to create the spot fleet configuraiton json.
 
 > Note:
 > The spot price can be specified as % of on-demand. Price is calculated at the specified percentage for each instance type specified using the AWS Price API. This downloads the AWS Price Index file in CSV format (~30MB)
 
-##Options
+## Options
 ```
   --layer-id TEXT              Layer ID to add the Spot Fleet instances to.                [required]
   --region TEXT                Region Name to create the Spot Fleet (Default: us-west-2)   [required]
@@ -28,7 +28,7 @@
   --help                       Show this message and exit.
 ```
 
-##Example
+## Example
 ```
 ./generate-config.py \
 --layer-id 00000000-x0x0-000x-x000-x0xxx0x0x0x0 \
@@ -48,7 +48,7 @@ opsworks_instance_id=$(aws opsworks register  --region us-east-1 --infrastructur
 aws opsworks wait instance-registered --region us-east-1 --instance-id $opsworks_instance_id
 aws opsworks --region us-east-1 assign-instance --instance-id  $opsworks_instance_id --layer-ids $layerid
 ```
-###user-data de-register
+### user-data de-register
 ```
 #!/bin/bash
 while sleep 5
